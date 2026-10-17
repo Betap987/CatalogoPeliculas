@@ -1,4 +1,4 @@
 class ConfiguracionConflicto02 {
-  static const String responsable = 'Pendiente';
-  static const String mensaje = 'Mensaje base del conflicto 02';
+  static const String responsable = 'Persona A';
+  static const String mensaje = 'Cambio realizado por Persona A';
 }
