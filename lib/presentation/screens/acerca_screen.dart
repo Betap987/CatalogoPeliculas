@@ -39,14 +39,14 @@ class AcercaScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 28),
-            _SeccionAcerca(
+            const _SeccionAcerca(
               titulo: 'Descripción',
               contenido:
                   'Aplicación móvil para consultar un catálogo de películas, '
                   'visualizar sus detalles y gestionar películas favoritas.',
             ),
             const SizedBox(height: 20),
-            _SeccionAcerca(
+            const _SeccionAcerca(
               titulo: 'Funcionalidades',
               contenido:
                   '• Consulta del catálogo de películas\n'
@@ -55,7 +55,10 @@ class AcercaScreen extends StatelessWidget {
                   '• Interfaz organizada y reutilizable',
             ),
             const SizedBox(height: 20),
-            _SeccionAcerca(titulo: 'Tecnologías', contenido: 'Flutter y Dart'),
+            const _SeccionAcerca(
+              titulo: 'Tecnologías',
+              contenido: 'Flutter y Dart',
+            ),
             const SizedBox(height: 32),
             Text(
               'Proyecto académico',
