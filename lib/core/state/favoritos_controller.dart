@@ -1,16 +1,25 @@
 import 'package:flutter/foundation.dart';
 
-class FavoritosController {
-  final ValueNotifier<Set<int>> ids = ValueNotifier<Set<int>>({});
+import '../../data/models/pelicula.dart';
 
-  bool esFavorito(int id) => ids.value.contains(id);
+class FavoritosController extends ChangeNotifier {
+  final Set<int> _ids = <int>{};
 
-  void alternar(int id) {
-    final nuevo = {...ids.value};
-    if (!nuevo.remove(id)) nuevo.add(id);
-    ids.value = nuevo; // Set nuevo para que el notifier avise del cambio
+  bool esFavorita(Pelicula pelicula) {
+    return _ids.contains(pelicula.id);
+  }
+
+  void alternar(Pelicula pelicula) {
+    if (_ids.contains(pelicula.id)) {
+      _ids.remove(pelicula.id);
+    } else {
+      _ids.add(pelicula.id);
+    }
+
+    notifyListeners();
+  }
+
+  List<Pelicula> filtrarFavoritos(List<Pelicula> peliculas) {
+    return peliculas.where((pelicula) => _ids.contains(pelicula.id)).toList();
   }
 }
-
-// Instancia compartida por toda la app
-final FavoritosController favoritosController = FavoritosController();

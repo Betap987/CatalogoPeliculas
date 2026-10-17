@@ -46,7 +46,7 @@ class PeliculaImagen extends StatelessWidget {
             ),
           );
         },
-        errorBuilder: (_, __, ___) {
+        errorBuilder: (_, _, _) {
           return _placeholder(
             const Icon(Icons.movie_outlined, color: AppColors.textoSecundario),
           );

@@ -1,73 +1,83 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_56/core/constants/app_colors.dart';
-import 'package:flutter_application_56/data/models/pelicula.dart';
-import 'package:flutter_application_56/presentation/widgets/calificacion_badge.dart';
-import 'package:flutter_application_56/presentation/widgets/genero_chip.dart';
-import 'package:flutter_application_56/presentation/widgets/pelicula_imagen.dart';
+
+import '../../core/state/favoritos_controller.dart';
+import '../../data/models/pelicula.dart';
+import '../screens/detalle_screen.dart';
+import 'boton_favorito.dart';
+import 'calificacion_fila.dart';
+import 'poster_pelicula.dart';
 
 class PeliculaCard extends StatelessWidget {
   final Pelicula pelicula;
-  final VoidCallback onTap;
-  final Widget? trailing;
+  final FavoritosController favoritosController;
 
   const PeliculaCard({
-    super.key,
     required this.pelicula,
-    required this.onTap,
-    this.trailing,
+    required this.favoritosController,
+    super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.superficie,
-      borderRadius: BorderRadius.circular(16),
+    return Card(
+      clipBehavior: Clip.antiAlias,
       child: InkWell(
-        borderRadius: BorderRadius.circular(16),
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Row(
-            children: [
-              PeliculaImagen(url: pelicula.imagen, ancho: 80, alto: 110),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      pelicula.titulo,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      '${pelicula.anio} · ${pelicula.duracion} min',
-                      style: const TextStyle(
-                        color: AppColors.textoSecundario,
-                        fontSize: 12,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Wrap(
-                      spacing: 8,
-                      runSpacing: 6,
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        GeneroChip(genero: pelicula.genero),
-                        CalificacionBadge(calificacion: pelicula.calificacion),
-                      ],
-                    ),
-                  ],
-                ),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => DetalleScreen(
+                pelicula: pelicula,
+                favoritosController: favoritosController,
               ),
-              if (trailing != null) trailing!,
-            ],
-          ),
+            ),
+          );
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Stack(
+                children: [
+                  Positioned.fill(
+                    child: PosterPelicula(
+                      url: pelicula.imagen,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Positioned(
+                    top: 4,
+                    right: 4,
+                    child: BotonFavorito(
+                      pelicula: pelicula,
+                      controller: favoritosController,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    pelicula.titulo,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 17,
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  Text('${pelicula.anio} • ${pelicula.genero}'),
+                  const SizedBox(height: 6),
+                  CalificacionFila(calificacion: pelicula.calificacion),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

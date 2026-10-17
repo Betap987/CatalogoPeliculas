@@ -1,35 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_application_56/core/constants/app_colors.dart';
+
+import '../constants/app_colors.dart';
 
 class AppTheme {
-  static ThemeData get light {
-    final base = ThemeData(
+  static ThemeData light() {
+    return ThemeData(
       useMaterial3: true,
       colorScheme: ColorScheme.fromSeed(
-        seedColor: AppColors.primario,
-        surface: AppColors.fondo,
+        seedColor: AppColors.primary,
+        surface: AppColors.background,
       ),
-    );
-
-    return base.copyWith(
-      scaffoldBackgroundColor: AppColors.fondo,
-      textTheme: base.textTheme.apply(
-        fontFamily: GoogleFonts.poppins().fontFamily,
-        bodyColor: AppColors.texto,
-        displayColor: AppColors.texto,
+      scaffoldBackgroundColor: AppColors.background,
+      appBarTheme: const AppBarTheme(
+        centerTitle: false,
+        backgroundColor: AppColors.background,
+        foregroundColor: AppColors.text,
       ),
-      appBarTheme: AppBarTheme(
-        backgroundColor: AppColors.fondo,
-        foregroundColor: AppColors.texto,
-        elevation: 0,
-        centerTitle: true,
-        titleTextStyle: GoogleFonts.poppins(
-          fontSize: 18,
-          fontWeight: FontWeight.w600,
-          color: AppColors.texto,
-        ),
+      cardTheme: const CardThemeData(
+        color: AppColors.card,
+        elevation: 2,
+        margin: EdgeInsets.zero,
       ),
     );
   }
+
+  const AppTheme._();
 }

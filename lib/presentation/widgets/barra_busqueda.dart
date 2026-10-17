@@ -1,34 +1,33 @@
-
 import 'package:flutter/material.dart';
-import 'package:flutter_application_56/core/constants/app_colors.dart';
 
 class BarraBusqueda extends StatelessWidget {
+  final TextEditingController controller;
   final ValueChanged<String> onChanged;
-  final String hint;
 
   const BarraBusqueda({
-    super.key,
+    required this.controller,
     required this.onChanged,
-    this.hint = 'Buscar película, género o director',
+    super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
       onChanged: onChanged,
       decoration: InputDecoration(
-        hintText: hint,
-        prefixIcon: const Icon(
-          Icons.search,
-          color: AppColors.textoSecundario,
-        ),
-        filled: true,
-        fillColor: AppColors.superficie,
-        contentPadding: const EdgeInsets.symmetric(vertical: 0),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14),
-          borderSide: BorderSide.none,
-        ),
+        hintText: 'Buscar película...',
+        prefixIcon: const Icon(Icons.search),
+        suffixIcon: controller.text.isEmpty
+            ? null
+            : IconButton(
+                onPressed: () {
+                  controller.clear();
+                  onChanged('');
+                },
+                icon: const Icon(Icons.clear),
+              ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
       ),
     );
   }

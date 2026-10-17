@@ -1,38 +1,39 @@
-
 import 'package:flutter/material.dart';
-import 'package:flutter_application_56/core/constants/app_colors.dart';
 
 class InfoFila extends StatelessWidget {
+  final String etiqueta;
+  final String valor;
   final IconData icono;
-  final String texto;
 
   const InfoFila({
-    super.key,
+    required this.etiqueta,
+    required this.valor,
     required this.icono,
-    required this.texto,
+    super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        children: [
-          Icon(
-            icono,
-            size: 18,
-            color: AppColors.primario,
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              texto,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(icono, size: 20),
+        const SizedBox(width: 10),
+        Expanded(
+          child: RichText(
+            text: TextSpan(
+              style: DefaultTextStyle.of(context).style,
+              children: [
+                TextSpan(
+                  text: '$etiqueta: ',
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                TextSpan(text: valor),
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
